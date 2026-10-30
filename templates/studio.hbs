@@ -1,0 +1,108 @@
+<div class="ls-studio {{#unless cfg.enabled}}is-off{{/unless}}">
+
+  <section class="ls-stage">
+    <div class="ls-preview"></div>
+    <div class="ls-stage-bar">
+      <button type="button" class="ls-chip {{#if walk}}active{{/if}}" data-action="toggleWalk" data-tooltip="Preview how it moves">
+        <i class="fa-solid fa-person-walking"></i> Walk
+      </button>
+      <span class="ls-hint">Hover any option to preview it</span>
+    </div>
+    <h4 class="ls-try-title">Try an action</h4>
+    <div class="ls-try">
+      {{#each actions}}
+      <button type="button" class="ls-chip" data-action="tryAction" data-preset="{{id}}" data-tooltip="{{description}}">
+        <i class="{{icon}}"></i> {{label}}
+      </button>
+      {{/each}}
+    </div>
+  </section>
+
+  <section class="ls-controls">
+    {{#if isDefaults}}
+    <p class="ls-defaults-note">Every token without its own setup uses this. Turn on <strong>Animate every token by default</strong> in the module settings to apply it to all tokens.</p>
+    {{else}}
+    <label class="ls-switch">
+      <input type="checkbox" data-field="enabled" {{#if cfg.enabled}}checked{{/if}}>
+      <span class="ls-switch-track"><span class="ls-switch-thumb"></span></span>
+      <span>Animate <strong>{{name}}</strong></span>
+    </label>
+    {{/if}}
+
+    <div class="ls-step">
+      <h3><span class="ls-num">1</span> Standing still</h3>
+      <div class="ls-cards">
+        {{#each idle}}
+        <button type="button" class="ls-card {{#if active}}active{{/if}}" data-action="pick" data-slot="idle" data-preset="{{id}}" data-tooltip="{{description}}">
+          <i class="{{icon}}"></i><span>{{label}}</span>
+        </button>
+        {{/each}}
+      </div>
+      <div class="ls-sliders">
+        <label>Strength <input type="range" min="0" max="2" step="0.05" value="{{cfg.idle.intensity}}" data-field="idle.intensity"></label>
+        <label>Speed <input type="range" min="0.25" max="2" step="0.05" value="{{cfg.idle.speed}}" data-field="idle.speed"></label>
+      </div>
+    </div>
+
+    <div class="ls-step">
+      <h3><span class="ls-num">2</span> Moving</h3>
+      <div class="ls-cards">
+        {{#each move}}
+        <button type="button" class="ls-card {{#if active}}active{{/if}}" data-action="pick" data-slot="move" data-preset="{{id}}" data-tooltip="{{description}}">
+          <i class="{{icon}}"></i><span>{{label}}</span>
+        </button>
+        {{/each}}
+      </div>
+      <div class="ls-sliders">
+        <label>Strength <input type="range" min="0" max="2" step="0.05" value="{{cfg.move.intensity}}" data-field="move.intensity"></label>
+        <label>Speed <input type="range" min="0.25" max="2" step="0.05" value="{{cfg.move.speed}}" data-field="move.speed"></label>
+      </div>
+      <label class="ls-check"><input type="checkbox" data-field="autoFace" {{#if cfg.autoFace}}checked{{/if}}> Turn to face the way it walks</label>
+    </div>
+
+    <div class="ls-step">
+      <h3><span class="ls-num">3</span> Shadow</h3>
+      <div class="ls-cards ls-cards-small">
+        {{#each shadows}}
+        <button type="button" class="ls-card {{#if active}}active{{/if}}" data-action="pick" data-slot="shadow" data-preset="{{id}}" data-tooltip="{{description}}">
+          <i class="{{icon}}"></i><span>{{label}}</span>
+        </button>
+        {{/each}}
+      </div>
+      <div class="ls-sliders">
+        <label>Darkness <input type="range" min="0" max="1" step="0.05" value="{{cfg.shadow.opacity}}" data-field="shadow.opacity"></label>
+        <label>Size <input type="range" min="0.3" max="2" step="0.05" value="{{cfg.shadow.size}}" data-field="shadow.size"></label>
+        <label>Nudge up/down <input type="range" min="-0.3" max="0.3" step="0.01" value="{{cfg.shadow.offset}}" data-field="shadow.offset"></label>
+      </div>
+    </div>
+
+    <details class="ls-more">
+      <summary>More options</summary>
+      <div class="ls-row">
+        <span>The artwork faces</span>
+        <div class="ls-segment">
+          <button type="button" class="{{#unless facingRight}}active{{/unless}}" data-action="setFacing" data-facing="left"><i class="fa-solid fa-arrow-left"></i> Left</button>
+          <button type="button" class="{{#if facingRight}}active{{/if}}" data-action="setFacing" data-facing="right">Right <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+      <label class="ls-check"><input type="checkbox" data-field="combatOnly" {{#if cfg.combatOnly}}checked{{/if}}> Only animate while in combat</label>
+    </details>
+  </section>
+
+  <footer class="ls-footer">
+    <button type="button" data-action="reset"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+    <span class="ls-spacer"></span>
+    {{#if isDefaults}}
+    {{#if isGM}}
+    <button type="button" data-action="applyScene" data-tooltip="Overwrite every token in the current scene, including ones you set up individually"><i class="fa-solid fa-map"></i> Apply to every token in scene</button>
+    {{/if}}
+    <button type="button" class="ls-primary" data-action="saveDefaults"><i class="fa-solid fa-check"></i> Save default</button>
+    {{else}}
+    {{#if canSaveActor}}
+    <button type="button" data-action="saveActor" data-tooltip="Also use this for every new token of this actor"><i class="fa-solid fa-user-gear"></i> Save for actor</button>
+    {{/if}}
+    <button type="button" data-action="saveSelected" data-tooltip="Copy to every token you have selected"><i class="fa-solid fa-users"></i> Save to selected</button>
+    <button type="button" class="ls-primary" data-action="save"><i class="fa-solid fa-check"></i> Save</button>
+    {{/if}}
+  </footer>
+</div>

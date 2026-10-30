@@ -1,0 +1,452 @@
+/* ---------------------------------------------
+   Living Sprites
+--------------------------------------------- */
+
+.living-sprites,
+.ls-hud-palette {
+  --ls-bg: #15171c;
+  --ls-panel: #1e2128;
+  --ls-panel-2: #262a33;
+  --ls-line: #343945;
+  --ls-text: #e8e6e1;
+  --ls-dim: #9aa0ab;
+  --ls-accent: #e8b44c;
+  --ls-accent-ink: #1b1406;
+}
+
+/* Studio window ------------------------------ */
+
+.ls-studio-app .window-content {
+  padding: 0;
+  background: var(--ls-bg);
+  color: var(--ls-text);
+}
+
+.ls-studio {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: 560px;
+}
+
+.ls-stage {
+  padding: 14px 10px 14px 14px;
+  border-right: 1px solid var(--ls-line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ls-preview {
+  width: 320px;
+  height: 360px;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at 50% 85%, rgba(232, 180, 76, 0.10), transparent 60%),
+    repeating-conic-gradient(#1c1f26 0% 25%, #191b21 0% 50%) 0 0 / 24px 24px;
+  border: 1px solid var(--ls-line);
+  overflow: hidden;
+}
+
+.ls-preview canvas {
+  display: block;
+}
+
+.ls-stage-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ls-hint {
+  color: var(--ls-dim);
+  font-size: 12px;
+}
+
+.ls-try-title {
+  margin: 6px 0 0;
+  border: none;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ls-dim);
+}
+
+.ls-try {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.living-sprites button.ls-chip {
+  flex: 0 0 auto;
+  width: auto;
+  height: 28px;
+  line-height: 26px;
+  padding: 0 10px;
+  margin: 0;
+  font-size: 12px;
+  border-radius: 14px;
+  background: var(--ls-panel-2);
+  border: 1px solid var(--ls-line);
+  color: var(--ls-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.living-sprites button.ls-chip:hover {
+  border-color: var(--ls-accent);
+  box-shadow: none;
+}
+
+.living-sprites button.ls-chip.active {
+  background: var(--ls-accent);
+  color: var(--ls-accent-ink);
+  border-color: var(--ls-accent);
+}
+
+/* Controls */
+
+.ls-controls {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  max-height: 640px;
+}
+
+.ls-studio.is-off .ls-step,
+.ls-studio.is-off .ls-more {
+  opacity: 0.4;
+}
+
+.ls-step h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  border: none;
+  font-size: 15px;
+  color: var(--ls-text);
+}
+
+.ls-num {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ls-accent);
+  color: var(--ls-accent-ink);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ls-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 6px;
+}
+
+.living-sprites button.ls-card {
+  height: auto;
+  min-height: 64px;
+  margin: 0;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--ls-panel);
+  border: 1px solid var(--ls-line);
+  border-radius: 8px;
+  color: var(--ls-text);
+  font-size: 12px;
+  line-height: 1.1;
+}
+
+.living-sprites button.ls-card i {
+  font-size: 18px;
+  color: var(--ls-dim);
+  margin: 0;
+}
+
+.living-sprites button.ls-card:hover {
+  border-color: var(--ls-accent);
+  box-shadow: none;
+}
+
+.living-sprites button.ls-card.active {
+  border-color: var(--ls-accent);
+  background: color-mix(in srgb, var(--ls-accent) 16%, var(--ls-panel));
+}
+
+.living-sprites button.ls-card.active i {
+  color: var(--ls-accent);
+}
+
+.ls-sliders {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 4px 14px;
+  margin-top: 8px;
+}
+
+.ls-sliders label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--ls-dim);
+}
+
+.ls-sliders input[type="range"] {
+  width: 100%;
+  accent-color: var(--ls-accent);
+}
+
+.ls-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ls-text);
+}
+
+.ls-check input {
+  accent-color: var(--ls-accent);
+  margin: 0;
+}
+
+/* On/off switch */
+
+.ls-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--ls-panel);
+  border: 1px solid var(--ls-line);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ls-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ls-switch-track {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--ls-line);
+  transition: background 0.15s;
+  flex: none;
+}
+
+.ls-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ls-text);
+  transition: transform 0.15s;
+}
+
+.ls-switch input:checked + .ls-switch-track {
+  background: var(--ls-accent);
+}
+
+.ls-switch input:checked + .ls-switch-track .ls-switch-thumb {
+  transform: translateX(16px);
+  background: var(--ls-accent-ink);
+}
+
+/* More options */
+
+.ls-more summary {
+  cursor: pointer;
+  color: var(--ls-dim);
+  font-size: 13px;
+}
+
+.ls-more[open] summary {
+  margin-bottom: 8px;
+}
+
+.ls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.ls-segment {
+  display: inline-flex;
+  border: 1px solid var(--ls-line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.living-sprites .ls-segment button {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  height: 28px;
+  padding: 0 12px;
+  background: var(--ls-panel);
+  color: var(--ls-dim);
+  font-size: 12px;
+}
+
+.living-sprites .ls-segment button.active {
+  background: var(--ls-accent);
+  color: var(--ls-accent-ink);
+}
+
+/* Footer */
+
+.ls-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--ls-line);
+  background: var(--ls-panel);
+}
+
+.ls-spacer {
+  flex: 1;
+}
+
+.living-sprites .ls-footer button {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+  height: 32px;
+  padding: 0 14px;
+  background: var(--ls-panel-2);
+  border: 1px solid var(--ls-line);
+  color: var(--ls-text);
+}
+
+.living-sprites .ls-footer button.ls-primary {
+  background: var(--ls-accent);
+  border-color: var(--ls-accent);
+  color: var(--ls-accent-ink);
+  font-weight: 700;
+}
+
+/* Token HUD ---------------------------------- */
+
+.ls-hud-wrap {
+  position: relative;
+}
+
+.ls-hud-palette {
+  display: none;
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 0;
+  width: 236px;
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--ls-bg);
+  border: 1px solid var(--ls-line);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  color: var(--ls-text);
+  z-index: 100;
+  pointer-events: all;
+}
+
+.ls-hud-palette.open {
+  display: block;
+}
+
+.ls-hud-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ls-dim);
+  margin: 0 2px 6px;
+}
+
+.ls-hud-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.ls-hud-palette button {
+  margin: 0;
+  padding: 6px 2px;
+  height: auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: var(--ls-panel);
+  border: 1px solid var(--ls-line);
+  border-radius: 6px;
+  color: var(--ls-text);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ls-hud-palette button i {
+  font-size: 15px;
+  margin: 0;
+}
+
+.ls-hud-palette button:hover {
+  border-color: var(--ls-accent);
+}
+
+.ls-hud-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.ls-hud-footer button {
+  flex-direction: row;
+  justify-content: center;
+  font-size: 11px;
+  padding: 6px;
+}
+
+.ls-hud-footer button.active {
+  color: var(--ls-accent);
+}
+
+/* Token config -------------------------------- */
+
+.ls-config-fieldset .ls-open-studio {
+  width: 100%;
+}
+
+.ls-defaults-note {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--ls-panel);
+  border: 1px solid var(--ls-line);
+  font-size: 13px;
+  color: var(--ls-dim);
+}
