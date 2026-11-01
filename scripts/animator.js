@@ -1,6 +1,7 @@
 import { AnimState, ACTIONS, IDENTITY, compose, hashString } from "./engine.js";
 import { MODULE, resolveConfig } from "./settings.js";
 import { createCanvasShadow, placeShadow } from "./shadows.js";
+import { hpEvents, reactFirst } from "./reactions.js";
 
 const KEYS = ["x", "y", "sx", "sy", "rot", "alpha", "tint"];
 
@@ -97,13 +98,15 @@ export class TokenAnimator {
     }
     this.ko = ko;
 
-    // Bar 1 went down -> flinch
+    // Bar 1 changed -> hurt, healed, Crisis, down or back up (Automatic actions)
     if (flags?.refreshBars || this.lastBar === undefined) {
       const bar = doc?.getBarAttribute?.("bar1");
       const value = bar?.type === "bar" ? Number(bar.value) : (Number.isFinite(Number(bar?.value)) ? Number(bar.value) : null);
-      if (value !== null && this.lastBar !== undefined && this.lastBar !== null
-        && value < this.lastBar && settings.autoHurt && !ko) {
-        this.playLocal("hurt");
+      const max = bar?.type === "bar" ? Number(bar.max) : NaN;
+      if (value !== null && this.lastBar !== undefined && this.lastBar !== null && performance.now() - this.attachedAt > 500) {
+        const events = hpEvents(this.lastBar, value, max).filter(e => !ko || e === "revived" || e === "down");
+        // the Defeated status already plays the collapse
+        reactFirst(this.token, ko ? events.filter(e => e !== "down") : events);
       }
       this.lastBar = value;
     }

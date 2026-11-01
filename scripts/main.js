@@ -3,6 +3,7 @@ import { MODULE, registerSettings } from "./settings.js";
 import { manager } from "./animator.js";
 import { openStudio, AnimationStudio, DefaultsStudio } from "./studio.js";
 import { renderTokenHUD, renderTokenConfig } from "./ui.js";
+import { ReactionsConfig, registerReactions } from "./reactions.js";
 
 Hooks.once("init", () => {
   game.settings.registerMenu(MODULE, "defaultsMenu", {
@@ -13,12 +14,21 @@ Hooks.once("init", () => {
     type: DefaultsStudio,
     restricted: true
   });
+  game.settings.registerMenu(MODULE, "reactionsMenu", {
+    name: "Automatic actions",
+    label: "Choose automatic actions",
+    hint: "What animated tokens do on their own: flinch when hurt, cheer when healed, collapse at 0 HP, celebrate when the combat ends, and more.",
+    icon: "fa-solid fa-bolt",
+    type: ReactionsConfig,
+    restricted: true
+  });
   registerSettings(() => manager.reloadAll());
 });
 
 Hooks.once("ready", () => {
   manager.refreshSettings();
   manager.listen();
+  registerReactions(manager);
 
   const api = {
     /** LivingSprites.play(token, "attack", { target }) */
