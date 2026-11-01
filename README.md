@@ -16,10 +16,24 @@ Every animation is generated from the single image already on the token, so it w
 
 **Shadows:** Soft oval (shrinks as the sprite lifts off the ground) or a slanted silhouette.
 
-**Automatic touches (GM can turn off):**
-- Flinches when Bar 1 goes down, in any game system
-- Collapses and stays down when the token gets the Defeated status
-- Crowds don't move in sync; each token has its own rhythm
+**Automatic actions:** tokens act on their own when something happens. The GM picks an action (or Nothing) for each event under **Automatic actions** in the module settings, and each token can choose its own in its Studio (More options → Automatic actions).
+
+| Event | Default |
+|---|---|
+| Takes damage (Bar 1 goes down) | Hit |
+| Is healed (Bar 1 goes up) | Heal |
+| Falls into Crisis (half HP or less) | Nothing |
+| Drops to 0 HP | Collapse |
+| Gets back up (from 0 HP) | Jump |
+| A combat starts (every combatant) | Nothing |
+| Its turn starts | Nothing |
+| The combat ends (everyone still standing) | Victory |
+| Attacks · Casts a spell · Dodges (Project FU chat cards) | Attack · Cast · Dodge |
+| Gains a status | Nothing |
+
+When one change means several things (a hit that drops it to 0), only the most important plays. Attacks, spells and dodges are left to FU Animations when it is active. Every client works the events out from what it already sees, so nothing extra goes over the network.
+
+Also: tokens with the Defeated status collapse and stay down, and crowds don't move in sync; each token has its own rhythm.
 
 ## How to use
 
@@ -38,7 +52,7 @@ To play an action during the game, open the same HUD button and click one. Targe
 |---|---|---|
 | Animate every token by default | GM | Uses the defaults below for any token not set up in the Studio |
 | Default animation (button) | GM | Opens the Studio to set the default for all tokens. Can also overwrite every token in the current scene |
-| Flinch when hurt | GM | Hit animation when Bar 1 decreases |
+| Automatic actions (button) | GM | What tokens do on their own for each event (see above) |
 | Fall over when defeated | GM | Collapse and stay down while Defeated |
 | Players can trigger actions | GM | Lets players play actions on tokens they own |
 | Animation strength on this computer | Each player | Turn motion down or off for comfort |

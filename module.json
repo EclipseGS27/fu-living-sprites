@@ -3,7 +3,7 @@
   "name": "living-sprites",
   "title": "Living Sprites",
   "description": "Bring any token image to life with one click. Ready-made idle, walk and action animations plus soft shadows, no sprite sheets or animation skills needed.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "authors": [
     {
       "name": "George Sowidan"
@@ -23,5 +23,5 @@
   "socket": true,
   "url": "https://github.com/EclipseGS27/fu-living-sprites",
   "manifest": "https://raw.githubusercontent.com/EclipseGS27/fu-living-sprites/main/module.json",
-  "download": "https://github.com/EclipseGS27/fu-living-sprites/releases/download/v0.1.4/fu-living-sprites.zip"
+  "download": "https://github.com/EclipseGS27/fu-living-sprites/releases/download/v0.2.0/fu-living-sprites.zip"
 }

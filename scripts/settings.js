@@ -7,7 +7,9 @@ export const DEFAULTS = Object.freeze({
   shadow: { style: "blob", opacity: 0.45, size: 1, offset: 0 },
   facing: "right",
   autoFace: false,
-  combatOnly: false
+  combatOnly: false,
+  // per-token choices for automatic actions ("default" or missing = the world's)
+  reactions: {}
 });
 
 export function registerSettings(onChange) {
@@ -20,11 +22,9 @@ export function registerSettings(onChange) {
     type: Boolean, default: false
   });
   game.settings.register(MODULE, "defaults", { scope: "world", config: false, type: Object, default: foundry.utils.deepClone(DEFAULTS), onChange });
-  world("autoHurt", {
-    name: "Flinch when hurt",
-    hint: "Plays the Hit animation whenever a token's Bar 1 value goes down. Works with any system.",
-    type: Boolean, default: true
-  });
+  // superseded by Automatic actions ("Takes damage"); kept so turning it off still works
+  game.settings.register(MODULE, "autoHurt", { scope: "world", config: false, type: Boolean, default: true, onChange });
+  game.settings.register(MODULE, "reactions", { scope: "world", config: false, type: Object, default: {}, onChange });
   world("autoKO", {
     name: "Fall over when defeated",
     hint: "Animated tokens with the Defeated status collapse and stay down until it is removed.",

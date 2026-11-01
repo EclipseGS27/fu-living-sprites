@@ -2,6 +2,7 @@ import { AnimState, ACTIONS, IDLE, MOVE, SHADOW_STYLES, compose } from "./engine
 import { MODULE, mergeConfig, studioConfig, worldDefaults } from "./settings.js";
 import { drawBlob, placeShadow } from "./shadows.js";
 import { manager } from "./animator.js";
+import { EVENTS, worldReactions } from "./reactions.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -179,6 +180,19 @@ export class AnimationStudio extends HandlebarsApplicationMixin(ApplicationV2) {
       actions: list(ACTIONS, null),
       facingRight: cfg.facing !== "left",
       canSaveActor: !!this.doc?.actor?.isOwner,
+      // this token's own automatic actions (the world's table is in the module settings)
+      reactions: this.isDefaults ? [] : (() => {
+        const world = worldReactions();
+        const label = id => (id === "none" ? "Nothing" : ACTIONS[id]?.label ?? id);
+        return EVENTS.map(e => {
+          const sel = cfg.reactions?.[e.id] ?? "default";
+          return {
+            id: e.id, label: e.label, hint: e.hint,
+            options: [["default", `Default (${label(world[e.id])})`], ["none", "Nothing"], ...Object.entries(ACTIONS).map(([id, a]) => [id, a.label])]
+              .map(([value, text]) => ({ value, text, selected: value === sel }))
+          };
+        });
+      })(),
       walk: !!this.preview?.walk
     };
   }
@@ -200,6 +214,15 @@ export class AnimationStudio extends HandlebarsApplicationMixin(ApplicationV2) {
     for (const input of root.querySelectorAll("input[data-field]")) {
       input.addEventListener("input", ev => this.#onField(ev.currentTarget));
       input.addEventListener("change", ev => this.#onField(ev.currentTarget));
+    }
+
+    // Automatic actions for this token
+    for (const sel of root.querySelectorAll("select[data-reaction]")) {
+      sel.addEventListener("change", () => {
+        this.cfg.reactions = { ...(this.cfg.reactions ?? {}), [sel.dataset.reaction]: sel.value };
+        if (sel.value === "default") delete this.cfg.reactions[sel.dataset.reaction];
+        if (ACTIONS[sel.value]) this.preview?.play(sel.value);
+      });
     }
 
     // Hovering a card previews it

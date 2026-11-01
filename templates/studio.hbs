@@ -87,6 +87,17 @@
       </div>
       <label class="ls-check"><input type="checkbox" data-field="combatOnly" {{#if cfg.combatOnly}}checked{{/if}}> Only animate while in combat</label>
     </details>
+    {{#if reactions.length}}
+    <details class="ls-more">
+      <summary>Automatic actions <small>what this token does on its own</small></summary>
+      <div class="ls-rx-list">
+        {{#each reactions}}
+        <label class="ls-rx" data-tooltip="{{hint}}"><span><b>{{label}}</b></span>
+          <select data-reaction="{{id}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{text}}</option>{{/each}}</select></label>
+        {{/each}}
+      </div>
+    </details>
+    {{/if}}
   </section>
 
   <footer class="ls-footer">
