@@ -344,7 +344,8 @@ export class DefaultsStudio extends AnimationStudio {
 }
 
 export function openStudio(ref) {
-  const token = manager.resolveToken(ref);
+  // no token given: the one the user has selected
+  const token = manager.resolveToken(ref ?? canvas.tokens?.controlled?.[0]);
   const doc = token?.document ?? (ref?.documentName === "Token" ? ref : null);
   if (!doc) return ui.notifications.warn("Pick a token first.");
   const existing = foundry.applications.instances?.get(`living-sprites-studio-${doc.id}`);
